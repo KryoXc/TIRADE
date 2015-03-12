@@ -9,6 +9,24 @@ WINDOW *view;
 WINDOW *console;
 WINDOW *inventory;
 
+//player struct info does not belong here
+typedef struct {
+	int x;
+	int y;
+	int hp;
+} PLAYER;
+
+//initialize player data ------------------------------------------------------
+PLAYER player = {2,2,10};
+
+/*
+player.x = 2;
+player.y = 2;
+player.hp = 10;
+*/
+
+//-----------------------------------------------------------------------------
+
 //TODO: add in mouseover console info? 
 
 //Initialize all windows in their proper spots
@@ -38,17 +56,29 @@ int get_input() {
 	int ch = getch();
 	switch(ch) {
 		case KEY_LEFT:
-			
+			if(player.x > 0) {
+				--player.x ;
+			}	
 			break;
+
 		case KEY_RIGHT:
-
+			if(player.x < 60) {
+				++player.x;
+			}	
 			break;
+
 		case KEY_UP:
-
+			if(player.y > 0) {
+				--player.y;
+			}	
 			break;
+
 		case KEY_DOWN:
-
+			if(player.x < 18) {
+				++player.y;
+			}	
 			break;
+
 		case 'q':
 			quit = 1;
 			break;
@@ -56,7 +86,7 @@ int get_input() {
 	
 	return quit;
 }
- 
 void draw() {
-
+	mvwprintw(view, player.y, player.x,"i");
+	wrefresh(view);
 }
