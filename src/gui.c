@@ -14,11 +14,17 @@ typedef struct {
 	int x;
 	int y;
 	int hp;
-} PLAYER;
+} ACTOR;
 
+typedef struct {
+	char *name;
+	int x;
+	int y;	
+} ITEM;
 //initialize player data ------------------------------------------------------
-PLAYER player = {2,2,10};
+ACTOR player = {2,2,10};
 
+ITEM key={"KEY",15, 10};
 /*
 player.x = 2;
 player.y = 2;
@@ -36,7 +42,6 @@ WINDOW *create_newwin(int height, int width, int starty, int startx) {
 	
 	local_win = newwin(height,width, starty, startx);
 	box(local_win,0,0);
-	//wborder(local_win,'|','|','-','-','+','+','+','+');
 	wrefresh(local_win);
 	
 	return local_win;
@@ -56,25 +61,25 @@ int get_input() {
 	int ch = getch();
 	switch(ch) {
 		case KEY_LEFT:
-			if(player.x > 0) {
-				--player.x ;
+			if(player.x > 1) {
+				--player.x;
 			}	
 			break;
 
 		case KEY_RIGHT:
-			if(player.x < 60) {
+			if(player.x < 58) {
 				++player.x;
 			}	
 			break;
 
 		case KEY_UP:
-			if(player.y > 0) {
+			if(player.y > 1) {
 				--player.y;
 			}	
 			break;
 
 		case KEY_DOWN:
-			if(player.x < 18) {
+			if(player.y < 16) {
 				++player.y;
 			}	
 			break;
@@ -87,6 +92,22 @@ int get_input() {
 	return quit;
 }
 void draw() {
+	// 
+
+	// viewport draw
+	werase(view);
+	box(view,0,0);
+	mvwprintw(view, key.y, key.x, "q");
 	mvwprintw(view, player.y, player.x,"i");
 	wrefresh(view);
+
+	// console draw
+	if(player.x == 15 && player.y == 10) {
+		mvwprintw(console, 1, 2, "you found a %s.\n", key.name);
+		werase(view);	
+		box(console, 0, 0);
+		wrefresh(console);			
+	}
+	// inventory draw
+
 }

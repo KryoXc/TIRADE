@@ -5,6 +5,7 @@
 */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "map.h"
 #include "gui.h"
 
@@ -19,6 +20,7 @@ int main(void) {
 	noecho(); //won't echo key presses on getch() call
 	cbreak();
 	raw(); // line buffering disabled
+	curs_set(0);
 	nodelay(stdscr,TRUE);
 
 	printw("Welcome to game.");
@@ -30,6 +32,7 @@ int main(void) {
 		quit = get_input();		
 		draw();
 		refresh();
+		//usleep(20000);
 	}
 	endwin();
 	
